@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" crossorigin="anonymous"/>
+    <title>Jakub Kašpar</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Spartan&display=swap');
+
+        body {
+            font-family: 'Spartan', sans-serif;
+        }
+
+        .row {
+            margin-bottom: 0 !important;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.7s;
+        }
+
+        a:hover {
+            color: darkgrey;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .timeline {
+            position: relative;
+        }
+
+        .timeline .timeline-event {
+            position: relative;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .timeline .timeline-event .timeline-content {
+            position: relative;
+            width: calc(98% - 50px);
+            right: calc(-6%);
+        }
+
+        .timeline .timeline-event::before {
+            display: block;
+            content: "";
+            width: 2px;
+            height: calc(50% - 30px);
+            position: absolute;
+            background: #d2d2d2;
+            right: calc(97% - 1px);
+            top: 0;
+        }
+
+        .timeline .timeline-event::after {
+            display: block;
+            content: "";
+            width: 2px;
+            height: calc(50% - 30px);
+            position: absolute;
+            background: #d2d2d2;
+            right: calc(97% - 1px);
+            top: calc(50% + 30px);
+        }
+
+        .timeline .timeline-event:first-child::before, .timeline .timeline-event:last-child::after {
+            display: none;
+        }
+
+        .timeline .timeline-event:nth-child(odd) .timeline-content {
+            margin-left: 0;
+        }
+
+        .timeline .timeline-badge {
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #d2d2d2;
+            top: calc(50% - 8px);
+            right: calc(97% - 8px);
+            border-radius: 50%;
+            text-align: center;
+            cursor: default;
+        }
+
+        .timeline .timeline-badge i {
+            font-size: 25px;
+            line-height: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .timeline .timeline-event .timeline-content {
+                width: calc(100% - 70px);
+            }
+
+            .timeline .timeline-event::before, .timeline .timeline-event::after {
+                left: 19px;
+            }
+
+            .timeline .timeline-event:nth-child(even) .timeline-content, .timeline .timeline-event:nth-child(odd) .timeline-content {
+                margin-left: 70px;
+            }
+
+            .timeline .timeline-badge {
+                left: 12px;
+            }
+        }
+
+        .topNav {
+            padding: 16px 16px;
+            line-height: 50px;
+        }
+
+        .collapsible {
+            border: none !important;
+        }
+    </style>
+</head>
+<!--
+    Website created using MaterializeCSS, jquery and FontAwesome
+-->
+<body class="blue-grey darken-4" id="top">
+<header>
+    <div class="fixed-action-btn">
+        <a href="#top" class="btn-floating btn-large blue-grey lighten-1">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+    <div class="row center blue-grey darken-1 white-text">
+        <div class="col s12 l6 m6 center">
+            <img style="border: 0; padding-top: 5px;" width="150" height="200" class="circle center responsive-img"
+                 alt="jakub"
+                 src="data:image/jpeg;base64,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"
+            >
+        </div>
+        <div class="col s12 l6 m6">
+            <h3><b>Jakub Kašpar</b><br><span style="font-style: italic; font-size: 30px;"
+                                             class="grey-text text-lighten-2">Software developer.</span></h3>
+        </div>
+    </div>
+    <div class="row blue-grey darken-2 white-text">
+        <div class="col s12 m3 l3 center">
+            <p><a href="mailto:onemoreplayscz@gmail.com" target="_blank"><i class="far fa-envelope"></i>
+                onemoreplayscz@gmail.com</a>
+            </p>
+        </div>
+        <div class="col s12 m3 l3 center">
+            <p><a
+                    href="https://github.com/inao-cz" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+        </div>
+        <div class="col s12 m3 l3 center">
+            <p><a
+                    href="https://www.linkedin.com/in/jakub-k-392605175/" target="_blank"><i
+                    class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+        <div class="col s12 m3 l3 center">
+            <p><a href="#" onclick="generatePdf()"><i class="fas fa-file"></i>
+                Generate PDF</a>
+            </p>
+        </div>
+    </div>
+    <div class="row blue-grey darken-3 center white-text">
+        <div class="col s12 m12 l12 center">
+            <a href="#timeline" class="blue-grey darken-3 topNav">Timeline</a>
+            <a href="#programming" class="blue-grey darken-3 topNav">Skills</a>
+            <a href="#highlight" class="blue-grey darken-3 topNav">Highlights</a>
+            <a href="#languages" class="blue-grey darken-3 topNav">Languages</a>
+            <a href="#personal" class="blue-grey darken-3 topNav">Personal info</a>
+        </div>
+    </div>
+</header>
+<br>
+
+<main>
+    <div class="container">
+        <div class="row white-text">
+            <div class="col s12 m12 l12">
+                <div class="card horizontal blue-grey">
+                    <div class="card-stacked">
+                        <div class="card-content" id="timeline">
+                            <h4 class="center">Timeline</h4>
+                            <div class="row">
+                                <div class="col s12 m12 l12">
+                                    <div>
+                                        <div class="timeline">
+
+                                            <div class="timeline-event">
+                                                <div class="card timeline-content">
+                                                    <div class="card-content blue-grey lighten-1 white-text">
+                                                        <h5>Job</h5>
+                                                        <p><a href="https://dieboldnixdorf.com"
+                                                              class="green-text text-lighten-4" target="_blank">Diebold
+                                                            Nixdorf</a></p>
+                                                        <p>Technology: Java</p>
+                                                        <p>Junior Software Engineer</p>
+                                                        <p class="black-text">1.4.2021 - Today</p>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-badge blue-grey lighten-1 white-text"></div>
+                                            </div>
+
+                                            <div class="timeline-event">
+                                                <div class="card timeline-content">
+                                                    <div class="card-content blue-grey lighten-1 white-text">
+                                                        <h5>Job</h5>
+                                                        <p><a class="green-text text-lighten-4"
+                                                              href="https://www.ubk.cz/" target="_blank">UBK s. r.
+                                                            o.</a></p>
+                                                        <p>Technology: PHP</p>
+                                                        <p>Junior programmer - Backend (Symfony 4/5)</p>
+                                                        <p class="black-text">1.7.2020 - 30.4.2021</p>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-badge blue-grey lighten-1 white-text"></div>
+                                            </div>
+
+                                            <div class="timeline-event">
+                                                <div class="card timeline-content">
+                                                    <div class="card-content blue-grey lighten-1 white-text">
+                                                        <div class="row">
+                                                            <div class="col s7 m7 l7"
+                                                                 style="border-right: grey solid 2px;">
+                                                                <h5>Studies <i class="fas fa-graduation-cap"></i></h5>
+                                                                <p><a href="https://infis.cz/"
+                                                                      class="green-text text-lighten-4" target="_blank">Střední
+                                                                    škola informatiky a finančních služeb, Klatovská
+                                                                    200G,
+                                                                    Plzeň</a></p>
+                                                                <p>IT (Focused on Networking and Cybersecurity)</p>
+                                                                <p class="black-text">2016 - 2020</p>
+                                                                <p><b>Graduated</b></p>
+                                                            </div>
+                                                            <div class="col s5 m5 l5">
+                                                                <h5>Part-time job</h5>
+                                                                <p><a href="https://www.ubk.cz/"
+                                                                      class="green-text text-lighten-4" target="_blank">UBK
+                                                                    s.
+                                                                    r. o.</a></p>
+                                                                <p>Technology: PHP</p>
+                                                                <p class="black-text">Late 2019 - 2020</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-badge grey darken-3 white-text"></div>
+                                            </div>
+
+                                            <div class="timeline-event">
+                                                <div class="card timeline-content">
+                                                    <div class="card-content blue-grey lighten-1 white-text">
+                                                        <h5>Studies</h5>
+                                                        <p>Elementary School</p>
+                                                        <p class="black-text">2007 - 2016</p>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-badge blue-grey lighten-1 white-text"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="green-text text-lighten-4">Text highlighted like this is a clickable link</p>
+                            <p class="grey-text text-darken-3">Dark grey dot means something important</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="row white-text">
+            <div class="col s12 m12 l12">
+                <div class="card horizontal blue-grey">
+                    <div class="card-stacked">
+                        <div class="card-content" id="programming">
+                            <h4 class="center">Skills</h4>
+                            <div class="row">
+                                <div class="col s6 m3 l2">
+                                    <div class="card horizontal blue-grey darken-2 white-text">
+                                        <div class="card-content center-align">
+                                            <p>Java <i class="fa fa-check green-text"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s6 m3 l2">
+                                    <div class="card horizontal blue-grey darken-2 white-text">
+                                        <div class="card-content center-align">
+                                            <p>PHP <i class="fa fa-check green-text"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s6 m3 l2">
+                                    <div class="card horizontal blue-grey darken-2 white-text">
+                                        <div class="card-content center-align">
+                                            <p>Maven <i class="fa fa-check green-text"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s6 m3 l2">
+                                    <div class="card horizontal blue-grey darken-2 white-text">
+                                        <div class="card-content center-align">
+                                            <p>HTML <i class="fa fa-check green-text"></i></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s6 m3 l2">
+                                    <div class="card horizontal blue-grey darken-2 white-text">
+                                        <div class="card-content center-align">
+                                            <p>SQL basics</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s6 m3 l2">
+                                    <div class="card horizontal blue-grey darken-2 white-text">
+                                        <div class="card-content center-align">
+                                            <p>Networking basics</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="green-text text-lighten-4"><i class="fa fa-check green-text"></i> means this skill
+                                is approved by LinkedIn assignments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="row white-text">
+            <div class="col s12 m12 l12">
+                <div class="card horizontal blue-grey">
+                    <div class="card-stacked">
+                        <div class="card-content" id="highlight">
+                            <h4 class="center">Open-Source Highlights</h4>
+                            <div class="row">
+                                <ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header blue-grey darken-2">Project bufferBot2</div>
+                                        <div class="collapsible-body blue-grey darken-3"><span>Project is created as a bot program for communication platform called Discord. This version is built on top of the Discord Bot Base Project (DBBP) version 3. This is a recode of older project bufferBot, currently in implementation of all features contained in old bufferBot into new, cooler structure.<br>Github Link: <a
+                                                href="https://github.com/inao-cz/bufferBot2" target="_blank"
+                                                class="grey-text">https://github.com/inao-cz/bufferBot2</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header blue-grey darken-2">Project DBBP3</div>
+                                        <div class="collapsible-body blue-grey darken-3"><span>Discord Bot Base Project (DBBP) version 3 is made as a transferable base that is supposed to make Discord bot program development easier as much as possible. Project bufferBot2 is built on top of this base.<br>Github Link: <a
+                                                href="https://github.com/inao-cz/dbbp3" target="_blank"
+                                                class="grey-text">https://github.com/inao-cz/dbbp3</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div class="collapsible-header blue-grey darken-2">Project inaoWeb</div>
+                                        <div class="collapsible-body blue-grey darken-3"><span>Personal website, located under <a
+                                                class="grey-text" target="_blank" href="https://inao.xn--6frz82g/">https://inao.xn--6frz82g/</a>. This website is fully open-sourced. Written in Symfony 5.4, using some PHP8 features.<br>Github Link: <a
+                                                href="https://github.com/inao-cz/inaoWeb" target="_blank"
+                                                class="grey-text">https://github.com/inao-cz/inaoWeb</a></span></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="row black-text">
+            <div class="col s12 m12 l12 center">
+                <div class="card horizontal blue-grey white-text">
+                    <div class="card-stacked">
+                        <div class="card-content" id="languages">
+                            <h4>Languages</h4>
+                            <div>
+                                <div class="card horizontal blue-grey lighten-1">
+                                    <div class="card-stacked">
+                                        <div class="card-content">
+                                            <div class="row">
+                                                <div class="col s6 m6 l6">
+                                                    <p style="font-size: 20px;">Czech</p>
+                                                    <p>Native speaker</p>
+                                                </div>
+                                                <div class="col s6 m6 l6">
+                                                    <p style="font-size: 20px;">English</p>
+                                                    <p>Level B1</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="row black-text">
+            <div class="col s12 m12 l12 center">
+                <div class="card horizontal blue-grey white-text">
+                    <div class="card-stacked">
+                        <div class="card-content" id="personal">
+                            <h4>Personal info</h4>
+                            <div>
+                                <div class="card horizontal blue-grey lighten-1">
+                                    <div class="card-stacked">
+                                        <div class="card-content">
+                                            <p style="font-size: 20px;">Born</p>
+                                            <br>
+                                            <p>17.12.2000<br>Tábor<br>Czech Republic</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="card horizontal blue-grey lighten-1">
+                                    <div class="card-stacked">
+                                        <div class="card-content">
+                                            <p style="font-size: 20px;">Residence</p>
+                                            <br>
+                                            <p>Hradec u Stoda</p>
+                                            <p>Plzeň-jih</p>
+                                            <p>33211, Hradec</p>
+                                            <p>Czech Republic</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="page-footer blue-grey darken-4">
+    <div class="container center">
+        <p>Random fun fact: <span id="randomFact"></span></p>
+    </div>
+    <div class="container center">
+        <p>Real fact: this whole page is in one html file. Yes, even that image. (And even passing W3C HTML
+            Validation)</p>
+    </div>
+    <div class="footer-copyright">
+        <div class="container center">
+            Copyright 2020-today Jakub Kašpar
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/js/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript"
+        src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+        crossorigin="anonymous"></script>
+
+<script>
+    const facts = [
+            "VGhlIGZpcnN0IHBlcnNvbiBjb252aWN0ZWQgb2Ygc3BlZWRpbmcgd2FzIGdvaW5nIGVpZ2h0IG1waC4=", "VGhlIHdvcmxkIHdhc3RlcyBhYm91dCAxIGJpbGxpb24gbWV0cmljIHRvbnMgb2YgZm9vZCBlYWNoIHllYXI=",
+            "TWFueSBmZWV0IGJvbmVzIGRvbid0IGhhcmRlbiB1bnRpbCB5b3UncmUgYW4gYWR1bHQ=", "VGhlIG1vb24gaGFzIG1vb25xdWFrZXM=", "VGhlICJNJ3MiIGluIE0mTXMgc3RhbmQgZm9yICJNYXJzIiBhbmQgIk11cnJpZS4i",
+            "Q290dG9uIGNhbmR5IHdhcyBpbnZlbnRlZCBieSBhIGRlbnRpc3Q=", "Q2hld2luZyBndW0gYm9vc3RzIGNvbmNlbnRyYXRpb24=", "VGhlIGZpcnN0IGNvbXB1dGVyIHdhcyBpbnZlbnRlZCBpbiB0aGUgMTk0MHM=",
+            "SXQncyBpbGxlZ2FsIHRvIG93biBqdXN0IG9uZSBndWluZWEgcGlnIGluIFN3aXR6ZXJsYW5k", "VGhlIHVuaWNvcm4gaXMgdGhlIG5hdGlvbmFsIGFuaW1hbCBvZiBTY290bGFuZA==",
+            "VmVudXMgaXMgdGhlIG9ubHkgcGxhbmV0IHRvIHNwaW4gY2xvY2t3aXNl", "VGhlcmUncyBhIGZydWl0IHRoYXQgdGFzdGVzIGxpa2UgY2hvY29sYXRlIHB1ZGRpbmc=", "VGhlIEVhc3RlciBJc2xhbmQgaGVhZHMgaGF2ZSBib2RpZXM="
+        ]
+    ;
+    $(document).ready(function () {
+        $("#randomFact").text(atob(facts[Math.floor(Math.random() * facts.length)]));
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), {
+            direction: 'left',
+            hoverEnabled: false
+        })
+        ;
+        M.Collapsible.init(document.querySelectorAll('.collapsible'), {});
+    });
+    $(document).scroll(function () {
+        $(window).scrollTop() === 0 ? $(".fixed-action-btn").hide() : $(".fixed-action-btn").show();
+    });
+    window.onload = function () {
+        $(".fixed-action-btn").hide();
+        console.info("Website created by Jakub Kaspar as a personal CV.");
+    };
+
+    function generatePdf() {
+        html2pdf().set({
+            margin: [0, -4, 0, 0],
+            filename: 'generated-cv.pdf',
+            html2canvas: {
+                scale: 1.15
+            },
+            jsPDF: {
+                orientation: 'landscape'
+            }
+        }).from(document.body).save();
+    }
+</script>
+</body>
+</html>
